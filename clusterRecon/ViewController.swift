@@ -43,9 +43,13 @@ func pointCloudGeometry(for points:[float3]) -> SCNGeometry? {
         
 }
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     @IBOutlet var sceneView: ARSCNView!
+    
+    var switchStatus = false
+    
+    
     
     let showDebugOptions = true
     let debugOptions : SCNDebugOptions  = [ARSCNDebugOptions.showFeaturePoints]
@@ -60,6 +64,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
+        
+        sceneView.session.delegate = self
         
         if showDebugOptions{
             sceneView.debugOptions = debugOptions
@@ -91,24 +97,28 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     func session(_ session: ARSession, didUpdate frame: ARFrame){
         guard let featurePoints = frame.rawFeaturePoints else {
-            print("sukkkkkk--------")
+            //print("sukkkkkk--------")
             return
             
         }
         
-        
-    
-        let featurePointsGeometry = pointCloudGeometry(for: featurePoints.points)
-        
-        let featurePointsNode = SCNNode(geometry: featurePointsGeometry)
-        
-        //featurePointsNode.geometry = featurePointsGeometry
-
-        if featurePointsNode.parent == nil {
-            sceneView.scene.rootNode.addChildNode(featurePointsNode)
+        if switchStatus{
+            
+            let featurePointsGeometry = pointCloudGeometry(for: featurePoints.points)
+            
+            let featurePointsNode = SCNNode(geometry: featurePointsGeometry)
+            
+            //featurePointsNode.geometry = featurePointsGeometry
+            
+            if featurePointsNode.parent == nil {
+                sceneView.scene.rootNode.addChildNode(featurePointsNode)
+            }
         }
     }
     
+    @IBAction func statusChanged(_ sender: UISwitch) {
+        switchStatus = sender.isOn
+    }
     
 
 

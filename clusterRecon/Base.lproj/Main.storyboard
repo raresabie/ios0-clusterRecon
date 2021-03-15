@@ -30,12 +30,20 @@
                                     <action selector="makeAction:" destination="BV1-FR-VrT" eventType="touchUpInside" id="nC4-V5-jWi"/>
                                 </connections>
                             </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="18T-QK-dUv">
+                                <rect key="frame" x="316" y="750" width="51" height="31"/>
+                                <connections>
+                                    <action selector="statusChanged:" destination="BV1-FR-VrT" eventType="valueChanged" id="PXK-2h-5v4"/>
+                                </connections>
+                            </switch>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fQZ-KI-GVf"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="5aj-62-6BP" firstAttribute="top" secondItem="18T-QK-dUv" secondAttribute="bottom" constant="8" symbolic="YES" id="Euv-EP-zVs"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" id="GsS-dJ-CKf"/>
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="5aj-62-6BP" secondAttribute="trailing" constant="37" id="Lx9-3i-kyi"/>
+                            <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="18T-QK-dUv" secondAttribute="trailing" constant="49" id="QJL-tc-7TK"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="bottom" secondItem="fQZ-KI-GVf" secondAttribute="bottom" id="VpT-BR-CcM"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="trailing" secondItem="fQZ-KI-GVf" secondAttribute="trailing" id="XyZ-9z-H8e"/>
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="bottom" secondItem="5aj-62-6BP" secondAttribute="bottom" constant="39" id="gTa-rJ-sVq"/>
