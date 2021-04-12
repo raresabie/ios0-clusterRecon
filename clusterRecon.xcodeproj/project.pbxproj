@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B1E7BCD2624FA1D00EC3EF0 /* CustomPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1E7BCC2624FA1D00EC3EF0 /* CustomPoints.swift */; };
+		5B1E7BD1262503DB00EC3EF0 /* PointGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1E7BD0262503DB00EC3EF0 /* PointGroup.swift */; };
 		5B45D4DD25FAC9CC00BF9D28 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B45D4DC25FAC9CC00BF9D28 /* AppDelegate.swift */; };
 		5B45D4DF25FAC9CC00BF9D28 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B45D4DE25FAC9CC00BF9D28 /* art.scnassets */; };
 		5B45D4E125FAC9CC00BF9D28 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B45D4E025FAC9CC00BF9D28 /* ViewController.swift */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5B1E7BCC2624FA1D00EC3EF0 /* CustomPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPoints.swift; sourceTree = "<group>"; };
+		5B1E7BD0262503DB00EC3EF0 /* PointGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointGroup.swift; sourceTree = "<group>"; };
 		5B45D4D925FAC9CC00BF9D28 /* clusterRecon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = clusterRecon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B45D4DC25FAC9CC00BF9D28 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5B45D4DE25FAC9CC00BF9D28 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -40,6 +44,7 @@
 		5B45D4D025FAC9CC00BF9D28 = {
 			isa = PBXGroup;
 			children = (
+				5B1E7BD0262503DB00EC3EF0 /* PointGroup.swift */,
 				5B45D4DB25FAC9CC00BF9D28 /* clusterRecon */,
 				5B45D4DA25FAC9CC00BF9D28 /* Products */,
 			);
@@ -63,6 +68,7 @@
 				5B45D4E525FAC9CF00BF9D28 /* Assets.xcassets */,
 				5B45D4E725FAC9CF00BF9D28 /* LaunchScreen.storyboard */,
 				5B45D4EA25FAC9CF00BF9D28 /* Info.plist */,
+				5B1E7BCC2624FA1D00EC3EF0 /* CustomPoints.swift */,
 			);
 			path = clusterRecon;
 			sourceTree = "<group>";
@@ -139,6 +145,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B45D4E125FAC9CC00BF9D28 /* ViewController.swift in Sources */,
+				5B1E7BCD2624FA1D00EC3EF0 /* CustomPoints.swift in Sources */,
+				5B1E7BD1262503DB00EC3EF0 /* PointGroup.swift in Sources */,
 				5B45D4DD25FAC9CC00BF9D28 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -30,7 +30,7 @@
                                     <action selector="makeAction:" destination="BV1-FR-VrT" eventType="touchUpInside" id="nC4-V5-jWi"/>
                                 </connections>
                             </button>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="18T-QK-dUv">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="18T-QK-dUv">
                                 <rect key="frame" x="316" y="750" width="51" height="31"/>
                                 <connections>
                                     <action selector="statusChanged:" destination="BV1-FR-VrT" eventType="valueChanged" id="PXK-2h-5v4"/>

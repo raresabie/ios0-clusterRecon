@@ -5,45 +5,29 @@
 //  Created by Rsabie on 11/03/2021.
 //
 
+
+
+//TODO :iinsert a custom node to viisualiize
+// resolve the multiple poiints
+// count the points and etabbilish if is ok for localization
+//
+//
+//
+
 import UIKit
 import SceneKit
 import ARKit
 
 
-func pointCloudGeometry(for points:[float3]) -> SCNGeometry? {
-       
-        guard !points.isEmpty else { return nil }
-        
-        let stride = MemoryLayout<float3>.size
-        let pointData = Data(bytes: points, count: stride * points.count)
-        
-        let source = SCNGeometrySource(data: pointData,
-                                       semantic: SCNGeometrySource.Semantic.vertex,
-                                       vectorCount: points.count,
-                                       usesFloatComponents: true,
-                                       componentsPerVector: 3,
-                                       bytesPerComponent: MemoryLayout<Float>.size,
-                                       dataOffset: 0,
-                                       dataStride: stride)
-        
-        let pointSize:CGFloat = 10
-        let element = SCNGeometryElement(data: nil, primitiveType: .point, primitiveCount: points.count, bytesPerIndex: 0)
-        element.pointSize = 0.001
-    element.minimumPointScreenSpaceRadius = pointSize
-    element.maximumPointScreenSpaceRadius = pointSize
-        
-        let pointsGeometry = SCNGeometry(sources: [source], elements: [element])
-        
-        let material = SCNMaterial()
-        material.diffuse.contents = UIColor.red
-        material.isDoubleSided = true
-        material.locksAmbientWithDiffuse = true
-        
-        return pointsGeometry
-        
-}
+
 
 class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
+    
+    
+    var addedPoints : [CustomPoint] = []
+    
+    var pointGroups : [PointGroup] = []
+    
     
     @IBOutlet var sceneView: ARSCNView!
     
@@ -95,16 +79,18 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         sceneView.session.pause()
     }
     
+    
+    
     func session(_ session: ARSession, didUpdate frame: ARFrame){
         guard let featurePoints = frame.rawFeaturePoints else {
-            //print("sukkkkkk--------")
+            //print("view did load guard--------")
             return
             
         }
         
         if switchStatus{
             
-            let featurePointsGeometry = pointCloudGeometry(for: featurePoints.points)
+            let featurePointsGeometry = createPointCloudGeometry(for: featurePoints.points)
             
             let featurePointsNode = SCNNode(geometry: featurePointsGeometry)
             
@@ -116,15 +102,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         }
     }
     
+    
+    
+    
+    
     @IBAction func statusChanged(_ sender: UISwitch) {
         switchStatus = sender.isOn
     }
-    
-
-
-    
-    
-    
     
     @IBAction func makeAction(_ sender: Any) {
         if let frame = sceneView.session.currentFrame {
@@ -132,6 +116,93 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         }
     }
     
+    
+    
+    func createPointCloudGeometry(for points:[SIMD3<Float>]) -> SCNGeometry? {
+        
+        guard !points.isEmpty else { return nil }
+        
+        
+        let defaultDistance = 0.50
+        
+        var newP : [CustomPoint] = []
+        
+        var mPoints = points.map{CustomPoint(position: $0)}
+        
+        var clust : [[CustomPoint]] = []
+        
+        for p in mPoints {
+            var added = false
+            for group in pointGroups {
+                if((group.distance(point: p)?.isLessThanOrEqualTo(Float(defaultDistance))) ?? false ){
+                    group.addPoint(point: p)
+                    added = true
+                    break
+                }
+            }
+            if(!added){
+                pointGroups.append(PointGroup(point: p))
+            }
+        }
+        
+        
+        
+        
+//        for p in points {
+//            let customP = CustomPoint(position : p)
+//            if(addedPoints.count == 0){
+//                newP.append(customP)
+//                addedPoints.append(customP)
+//            }
+//            else {
+//                for oldP in addedPoints {
+//                    if(customP.isInRange(other: oldP, rangeDim: Float(defaultDistance))){
+//                        oldP.incrementOccurances()
+//                    }
+//                    else {
+//                        newP.append(customP)
+//                        addedPoints.append(customP)
+//                    }
+//                }
+//            }
+//        }
+        
+        
+        
+        let stride = MemoryLayout<SIMD3<Float>>.size
+        let pointData = Data(bytes: pointGroups.map{$0.averagePoint.position}, count: stride * pointGroups.count)
+        
+        let source = SCNGeometrySource(data: pointData,
+                                       semantic: SCNGeometrySource.Semantic.vertex,
+                                       vectorCount: pointGroups.count,
+                                       usesFloatComponents: true,
+                                       componentsPerVector: 3,
+                                       bytesPerComponent: MemoryLayout<Float>.size,
+                                       dataOffset: 0,
+                                       dataStride: stride)
+        
+        let pointSize:CGFloat = 10
+        let element = SCNGeometryElement(data: nil, primitiveType: .point, primitiveCount: pointGroups.count, bytesPerIndex: 0)
+        element.pointSize = 0.001
+        element.minimumPointScreenSpaceRadius = pointSize
+        element.maximumPointScreenSpaceRadius = pointSize
+        
+        let pointsGeometry = SCNGeometry(sources: [source], elements: [element])
+        
+        let material = SCNMaterial()
+        material.diffuse.contents = UIColor.red
+        material.isDoubleSided = true
+        material.locksAmbientWithDiffuse = true
+        
+        return pointsGeometry
+        
+    }
+    
+    
+    
+    
+    
+    // MARK: - non utiilizzata
     func mActionAnchors1(){
         var targettedAnchorNode: SCNNode?
         
@@ -160,12 +231,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }
     
     
-    func addNode(position : SCNVector3, anchorNode : SCNNode) {
+    
+    //MARK: - non usata
+    func addNode(position : SCNVector3, anchorNode : SCNNode, radius : CGFloat = 0.2) {
         
-        let sphere = SCNSphere(radius: 0.2)
-        
+        let sphere = SCNSphere(radius: radius)
         let material = SCNMaterial()
-        
         material.diffuse.contents = UIColor.green
         //material.diffuse.contents = UIImage(named: "art.scnassets/8k_moon.jpg")
         sphere.materials = [material]
