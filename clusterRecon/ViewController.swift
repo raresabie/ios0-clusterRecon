@@ -49,6 +49,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     var switchStatus = false
     
+    var visualizedPointCloud : SCNNode? = nil
+    
     
     
     let showDebugOptions = true
@@ -111,7 +113,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             //featurePointsNode.geometry = featurePointsGeometry
             
             if featurePointsNode.parent == nil {
-                sceneView.scene.rootNode.addChildNode(featurePointsNode)
+                if let vPC = visualizedPointCloud {
+                    sceneView.scene.rootNode.replaceChildNode(vPC, with: featurePointsNode)
+                }
+                else {
+                    sceneView.scene.rootNode.addChildNode(featurePointsNode)
+                    
+                }
+                visualizedPointCloud = featurePointsNode
+                
             }
         }
     }
